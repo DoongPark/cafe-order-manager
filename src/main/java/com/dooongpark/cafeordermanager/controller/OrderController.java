@@ -25,13 +25,13 @@ public class OrderController {
 
     @PostMapping("order/cancel")
     @ResponseBody
-    public String removeOrder(@RequestParam Long orderNum) {
+    public String removeOrder(@RequestParam("ordernum") Long orderNum) {
         return orderService.removeOrder(orderNum);
     }
 
-    @GetMapping("orderNum/{orderNum}")
+    @GetMapping("ordernum/{orderNum}")
     @ResponseBody
     public Order getOrderbyOrderNum(@PathVariable("orderNum") Long orderNum) {
-        return orderRepository.findByOrderNum(orderNum).get();
+        return orderRepository.findByOrderNum(orderNum).orElse(null);
     }
 }
