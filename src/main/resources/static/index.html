@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Here!</title>
+</head>
+<body>
+<h1>카페 주문</h1>
+<form action="/order" method="post">
+  <h2>메뉴 선택:</h2>
+  <input type="radio" id="americano" name="menu" value="americano">
+  <label for="americano">아메리카노</label><br>
+  <input type="radio" id="latte" name="menu" value="latte">
+  <label for="latte">라떼</label><br>
+  <input type="radio" id="cappuccino" name="menu" value="cappuccino">
+  <label for="cappuccino">카푸치노</label><br><br>
+  <label for="pay">지불 금액:</label><br>
+  <input type="number" id="pay" name="pay"><br><br>
+  <input type="submit" value="주문">
+</form>
+<script>
+  let form = document.querySelector('form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    let checkboxes = document.querySelectorAll('input[type="radio"][name="menu"]');
+    let checked = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+    let menu = checked.map(checkbox => checkbox.value).join(',');
+    let pay = document.querySelector('#pay').value;
+    fetch(`/order?menu=${menu}&pay=${pay}`, {
+      method: 'POST'
+    });
+  });
+</script>
+</body>
+</html>
